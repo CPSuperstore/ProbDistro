@@ -8,6 +8,8 @@ from ProbDistro.continuous_distributions.uniform import Uniform
 from ProbDistro.continuous_distributions.normal import Normal
 from ProbDistro.continuous_distributions.exponential import Exponential
 
+from ProbDistro.random_variable.random_variable import RandomVariable
+
 import ProbDistro.conversion as conversions
 
 # aliases for distributions
