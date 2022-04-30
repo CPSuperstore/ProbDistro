@@ -86,92 +86,92 @@ print(n.pdf(5))
 ### Discrete Distribution
 All continuous distributions extend the `BaseDiscreteDistribution` class. This enforces each discrete distribution to implement the following methods:
 
-#### `cdf(x: float) -> float:`
+#### cdf(x: float) -> float:
 Returns the value of the cumulative distribution function at `x`
 
-#### `pmf(x: float) -> float:`
+#### pmf(x: float) -> float:
 Returns the value of the probability mass function at `x`
 
-#### `equals(x: float) -> float:`
+#### equals(x: float) -> float:
 An alias for the `pmf` method
 
-#### `expected_value() -> float:`
+#### expected_value() -> float:
 Returns the expected value of the distribution
 
-#### `variance() -> float:`
+#### variance() -> float:
 Returns the variance of the distribution
 
-#### `less_than(x: float) -> float:`
+#### less_than(x: float) -> float:
 Returns the probability of being less than `x` 
 
-#### `less_than_equals(x: float) -> float:`
+#### less_than_equals(x: float) -> float:
 Returns the probability of being less than or equal to `x` 
 
-#### `greater_than(x: float) -> float:`
+#### greater_than(x: float) -> float:
 Returns the probability of being greater than `x` 
 
-#### `greater_than_equals(x: float) -> float:`
+#### greater_than_equals(x: float) -> float:
 Returns the probability of being greater than or equal to `x` 
 
-#### `mean() -> float:`
+#### mean() -> float:
 Returns the mean value of the distribution. This is an alias for the `expected_value` method.
 
-#### `standard_deviation() -> float:`
+#### standard_deviation() -> float:
 Returns the standard deviation of the distribution.
 
-#### `between(upper: float, lower: float):`
+#### between(upper: float, lower: float):
 Returns the probability of being between the upper and lower bounds. Entering the upper bound as the lower bound will result in a negative probability.
 
-#### `cdf_range(x: typing.Iterable):`
+#### cdf_range(x: typing.Iterable):
 Returns a list containing the value of the CDF at every value in the provided iterable (list, range, set, tuple, etc.)
 
-#### `pmf_range(x: typing.Iterable):`
+#### pmf_range(x: typing.Iterable):
 Returns a list containing the value of the PMF at every value in the provided iterable (list, range, set, tuple, etc.)
 
 
 ### Continuous Distribution
 All continuous distributions extend the `BaseDiscreteDistribution` class. This enforces each discrete distribution to implement the following methods:
 
-#### `cdf(self, x: float) -> float:`
+#### cdf(self, x: float) -> float:
 Returns the value of the cumulative distribution function at `x`
 
-#### `pdf(self, x: float) -> float:`
+#### pdf(self, x: float) -> float:
 Returns the value of the probability density function at `x`
 
-#### `equals(self, x: float) -> float:`
+#### equals(self, x: float) -> float:
 Returns 0
 
-#### `expected_value(self) -> float:`
+#### expected_value(self) -> float:
 Returns the expected value of the distribution
 
-#### `variance(self) -> float:`
+#### variance(self) -> float:
 Returns the variance of the distribution
 
-#### `less_than(self, x: float) -> float:`
+#### less_than(self, x: float) -> float:
 Returns the probability of being less than `x` 
 
-#### `less_than_equals(self, x: float) -> float:`
+#### less_than_equals(self, x: float) -> float:
 Returns the probability of being less than or equal to `x` 
 
-#### `greater_than(self, x: float) -> float:`
+#### greater_than(self, x: float) -> float:
 Returns the probability of being greater than `x` 
 
-#### `greater_than_equals(self, x: float) -> float:`
+#### greater_than_equals(self, x: float) -> float:
 Returns the probability of being greater than or equal to `x` 
 
-#### `mean(self) -> float:`
+#### mean(self) -> float:
 Returns the mean value of the distribution. This is an alias for the `expected_value` method.
 
-#### `standard_deviation(self) -> float:`
+#### standard_deviation(self) -> float:
 Returns the standard deviation of the distribution.
 
-#### `between(self, upper: float, lower: float):`
+#### between(self, upper: float, lower: float):
 Returns the probability of being between the upper and lower bounds. Entering the upper bound as the lower bound will result in a negative probability.
 
-#### `cdf_range(self, x: typing.Iterable):`
+#### cdf_range(self, x: typing.Iterable):
 Returns a list containing the value of the CDF at every value in the provided iterable (list, range, set, tuple, etc.)
 
-#### `pdf_range(self, x: typing.Iterable):`
+#### pdf_range(self, x: typing.Iterable):
 Returns a list containing the value of the PDF at every value in the provided iterable (list, range, set, tuple, etc.)
 
 ### Converting Between Distributions
