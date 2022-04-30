@@ -1,6 +1,16 @@
 # ProbDistro
 A Python package for handling various continuous and discrete random variables, including normal/gauss, binomial, poisson, and more!
 
+**Contents:**
+- [Available Distributions](#available-distributions)
+  - [Discrete Distribution](#discrete)
+  - [Continuous Distribution](#continuous)
+- [Usage](#usage)
+  - [Discrete Distribution](#discrete-distribution)
+  - [Continuous Distribution](#continuous-distribution)
+  - [Converting Between Distributions](#converting-between-distributions)
+- [Bug Tracker](#bug-tracker)
+
 ## Available Distributions
 The following is a list of discrete and continuous distributions this library has to offer
 
