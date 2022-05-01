@@ -34,6 +34,12 @@ class TestBernoulli(unittest.TestCase):
         self.assertEqual(round(p.variance(), 2), 0.21)
         self.assertEqual(round(p.standard_deviation(), 5), round(math.sqrt(0.21), 5))
 
+    def test_to_discrete_rv(self):
+        p = Bernoulli(0.7)
+        rv = p.to_discrete_random_variable()
+        self.assertEqual(rv.x, [0, 1])
+        self.assertEqual(rv.px, [0.30000000000000004, 0.7])
+
 
 if __name__ == '__main__':
     unittest.main()

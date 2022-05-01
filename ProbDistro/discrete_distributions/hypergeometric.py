@@ -40,3 +40,6 @@ class Hypergeometric(base_discrete_distribution.BaseDiscreteDistribution):
 
     def variance(self) -> float:
         return self.n * (self.K / self.N) * ((self.N - self.K) / self.N) * ((self.N - self.n) / (self.N - 1))
+
+    def _get_defaults(self) -> tuple:
+        return max(0, self.n + self.K - self.N), min(self.n, self.K), 1

@@ -18,8 +18,18 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
         self.px = list(px)
 
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, data: dict, correct: bool = False):
+        if correct:
+            return cls.correct_probabilities(list(data.keys()), list(data.values()))
+
         return cls(list(data.keys()), list(data.values()))
+
+    @classmethod
+    def correct_probabilities(cls, x: typing.Sequence[float], px: typing.Sequence[float]):
+        denominator = sum(px)
+        px = [i / denominator for i in px]
+
+        return cls(x, px)
 
     def __pow__(self, power, modulo=None) -> 'DiscreteRandomVariable':
         return DiscreteRandomVariable([x ** power for x in self.x], self.px)
@@ -78,3 +88,25 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
                 result[-1].append(self.p_and(x, y))
 
         return result
+
+    def _get_defaults(self) -> tuple:
+        return min(self.x), max(self.x), 1
+
+    def to_discrete_random_variable(
+            self, start: float = None, stop: float = None, step: float = None
+    ) -> 'DiscreteRandomVariable':
+
+        default_start, default_stop, default_step = self._get_defaults()
+
+        start = default_start if start is None else start
+        stop = default_stop if stop is None else stop
+
+        res_x = []
+        res_px = []
+
+        for x, px in zip(self.x, self.px):
+            if start <= x <= stop:
+                res_x.append(x)
+                res_px.append(px)
+
+        return DiscreteRandomVariable.correct_probabilities(res_x, res_px)

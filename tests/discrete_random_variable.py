@@ -81,6 +81,18 @@ class TestRandomVariable(unittest.TestCase):
         p = DiscreteRandomVariable([1, 2, 3], [0.5, 0.25, 0.25]) ** 3
         self.assertEqual(p.x, [1, 8, 27])
 
+    def test_to_discrete_rv(self):
+        p = DiscreteRandomVariable(
+            [1, 2, 3, 4],
+            [0.5, 0.25, 0.125, 0.125]
+        )
+        rv = p.to_discrete_random_variable(1, 3)
+
+        self.assertEqual(rv.x, [1, 2, 3])
+        self.assertEqual(
+            rv.px, [0.5714285714285714, 0.2857142857142857, 0.14285714285714285]
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

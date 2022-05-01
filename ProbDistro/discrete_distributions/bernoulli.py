@@ -32,3 +32,6 @@ class Bernoulli(base_discrete_distribution.BaseDiscreteDistribution):
 
     def variance(self) -> float:
         return self.p * self.q
+
+    def _get_defaults(self) -> tuple:
+        return 0, 1, 1

@@ -34,3 +34,6 @@ class Poisson(base_discrete_distribution.BaseDiscreteDistribution):
 
     def variance(self) -> float:
         return self.rate
+
+    def _get_defaults(self) -> tuple:
+        return 0, None, 1

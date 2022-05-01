@@ -42,3 +42,6 @@ class Binomial(base_discrete_distribution.BaseDiscreteDistribution):
 
     def as_poisson(self) -> poisson.Poisson:
         return poisson.Poisson(self.n * self.p)
+
+    def _get_defaults(self) -> tuple:
+        return 0, self.n, 1
