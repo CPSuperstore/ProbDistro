@@ -1,3 +1,4 @@
+import math
 import typing
 import ProbDistro.base_discrete_distribution as base_discrete_distribution
 
@@ -19,10 +20,18 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
 
     @classmethod
     def from_dict(cls, data: dict, correct: bool = False):
-        if correct:
-            return cls.correct_probabilities(list(data.keys()), list(data.values()))
+        keys = list(data.keys())
+        keys.sort()
 
-        return cls(list(data.keys()), list(data.values()))
+        values = []
+
+        for k in keys:
+            values.append(data[k])
+
+        if correct:
+            return cls.correct_probabilities(keys, values)
+
+        return cls(keys, values)
 
     @classmethod
     def correct_probabilities(cls, x: typing.Sequence[float], px: typing.Sequence[float]):
@@ -33,6 +42,19 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
 
     def __pow__(self, power, modulo=None) -> 'DiscreteRandomVariable':
         return DiscreteRandomVariable([x ** power for x in self.x], self.px)
+
+    def __mul__(self, other: 'DiscreteRandomVariable') -> 'DiscreteRandomVariable':
+        result = {}
+
+        for x, px in zip(self.x, self.px):
+            for y, py in zip(other.x, other.px):
+                if x * y not in result:
+                    result[x * y] = self.p_and(px, py)
+
+                else:
+                    result[x * y] += self.p_and(px, py)
+
+        return DiscreteRandomVariable.from_dict(result)
 
     def pmf(self, x: float) -> float:
         return self.px[self.x.index(x)]
@@ -70,14 +92,17 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
     def p_given(x: float, other: float):
         return (x * other) / x
 
-    def intersection(self, x: float, other: float):
-        return self.p_and(x, other)
+    @staticmethod
+    def intersection(x: float, other: float):
+        return DiscreteRandomVariable.p_and(x, other)
 
-    def union(self, x: float, other: float):
-        return self.p_or(x, other)
+    @staticmethod
+    def union(x: float, other: float):
+        return DiscreteRandomVariable.p_or(x, other)
 
-    def disjoint_union(self, x: float, other: float):
-        return self.p_disjoint_or(x, other)
+    @staticmethod
+    def disjoint_union(x: float, other: float):
+        return DiscreteRandomVariable.p_disjoint_or(x, other)
 
     def jointly_distributed_table(self, other: 'DiscreteRandomVariable') -> typing.List[typing.List[float]]:
         result = []
@@ -110,3 +135,9 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
                 res_px.append(px)
 
         return DiscreteRandomVariable.correct_probabilities(res_x, res_px)
+
+    def covariance(self, other: 'DiscreteRandomVariable') -> float:
+        return (self * other).expected_value() - (self.expected_value() * other.expected_value())
+
+    def correlation(self, other: 'DiscreteRandomVariable') -> float:
+        return self.covariance(other) / math.sqrt(self.variance() * other.variance())
