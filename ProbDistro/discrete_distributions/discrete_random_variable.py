@@ -4,7 +4,7 @@ import ProbDistro.base_discrete_distribution as base_discrete_distribution
 
 class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution):
     def __init__(self, x: typing.Sequence[float], px: typing.Sequence[float]):
-        if sum(px) != 1:
+        if round(sum(px), 10) != 1:
             raise ValueError(
                 "Sum of all probabilities must equal 1 by law of total probability. Got {}.".format(sum(px))
             )
@@ -43,3 +43,38 @@ class DiscreteRandomVariable(base_discrete_distribution.BaseDiscreteDistribution
 
     def variance(self) -> float:
         return (self ** 2).expected_value() - self.expected_value() ** 2
+
+    @staticmethod
+    def p_and(x: float, other: float):
+        return x * other
+
+    @staticmethod
+    def p_or(x: float, other: float):
+        return (x + other) - (x * other)
+
+    @staticmethod
+    def p_disjoint_or(x: float, other: float):
+        return x + other
+
+    @staticmethod
+    def p_given(x: float, other: float):
+        return (x * other) / x
+
+    def intersection(self, x: float, other: float):
+        return self.p_and(x, other)
+
+    def union(self, x: float, other: float):
+        return self.p_or(x, other)
+
+    def disjoint_union(self, x: float, other: float):
+        return self.p_disjoint_or(x, other)
+
+    def jointly_distributed_table(self, other: 'DiscreteRandomVariable') -> typing.List[typing.List[float]]:
+        result = []
+
+        for y in other.px:
+            result.append([])
+            for x in self.px:
+                result[-1].append(self.p_and(x, y))
+
+        return result
